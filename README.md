@@ -55,11 +55,11 @@ ToDevC3tf 1.0.0, ESP32-C3 WROOM modülü tabanlı, endüstriyel kullanıma uygun
 
 ### Uyumlu Kutu Modelleri
 - **Duvar Tipi Kutular:**
-  - [DM-013](https://www.altinkaya.com.tr/tr/shop/dm-013-duvar-tipi-kutu-1122) (87.5 x 45 x 23.3 mm)
-  - [DM-014](https://www.altinkaya.com.tr/tr/shop/dm-014-duvar-tipi-kutu-1123) (87.5 x 45 x 23.3 mm)
+  - [DM-013](https://www.altinkaya.com/tr/shop/dm-013-duvar-tipi-kutu-1122#attr=14957) (87.5 x 45 x 23.3 mm)
+  - [DM-014](https://www.altinkaya.com/tr/shop/dm-014-duvar-tipi-kutu-1123#attr=14959,14966) (87.5 x 45 x 23.3 mm)
 - **El Tipi Kutular:**
-  - [HH-013](https://www.altinkaya.com.tr/tr/shop/hh-013-el-tipi-kutu-1124) (87.5 x 45 x 23.3 mm)
-  - [HH-014](https://www.altinkaya.com.tr/tr/shop/hh-014-el-tipi-kutu-1125) (87.5 x 45 x 23.3 mm)
+  - [HH-013](https://www.altinkaya.com/tr/shop/hh-013-el-tipi-kutu-1285#attr=15749) (87.5 x 45 x 23.3 mm)
+  - [HH-014](https://www.altinkaya.com/tr/shop/hh-014-el-tipi-kutu-3434#attr=22156,22157,26870,22161) (87.5 x 45 x 23.3 mm)
 
 > **Not:** PCB tasarımı, [Altınkaya Elektronik](https://www.altinkaya.com.tr)'in standart kutu modellerine tam uyumludur. Tüm modeller için montaj noktaları ve boyutlar optimize edilmiştir.
 
