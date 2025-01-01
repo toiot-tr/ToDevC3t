@@ -151,9 +151,28 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
 ### Pin Açıklamaları
 
+#### Pcb Üzerindeki Kıslatmalar
+- A Analog
+- D Dijital
+- B BTN Buton
+- L LED
+- F FET Mosfet
+- S Strapping pin (çevreleme pinleri boot yapılandırması için, yazılımdan kontrol edilebilir)
+- G GND
+- VCC + voltaj girişi
+- EN Enable
+- RC Direnç Kapasitör filtresi
+- LC Indüktör Kapasitör filtresi
+- R_VBx Voltaj bölücü veya pin öncesi direnç
+- R_VBx- Voltaj bölücü direnç
+- Rx- Pulldown direnç
+- Rx+ Pullup direnç
+- Rakamlar pin numaralarıdır.
+
 #### Analog Girişler
 - A0-A4: Analog giriş pinleri (R_VB0 - R_VB4)
-- ADC: Analog-Dijital dönüştürücü pinleri
+- ADCvb bölümündeki padler direnç lehimlenmediği durumlarda açık devredir, voltaj bölücü olarak kullanılabilir.
+- GPIO padleri direk işlemciye bağlıdır.
 
 #### UART ve USB
 - TX/RX: UART haberleşme pinleri
@@ -175,7 +194,8 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 - BTN IO6: Kontrol butonu
 
 #### MOSFET Çıkışları
-- FET 7-10: RGB ve güç kontrolü için MOSFET çıkışları
+- FET 7-8-9: RGB ve güç anahtarlaması için MOSFET çıkışları
+- FET 10: Adreslenebilir LED şeritler veya 5v pwm için MOSFET çıkışı
 
 ### USB Bağlantı Detayları
 
@@ -228,20 +248,22 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
 #### PWM Çıkış Özellikleri (IO10)
 - 5V PWM çıkışı (Adreslenebilir LED'ler için uygun)
-- RGB LED kontrolü için 3 kanal 5A 30V MOSFET
+- RGB LED kontrolü veya güç anahtarlaması için 3 kanal 5A 30V MOSFET
 - Her kanal için ayrı kontrol
 
 ### Koruma ve Filtreleme
+- 3V3 RC filtre (100R & 10uF)
+- Vcc giriş LC filtresi (2.2uH & 100nF)
 
 #### Sinyal Filtreleme
 - IR ve benzerisensörler için 3V3 RC filtre (100R & 10uF)
 - Buton parazit önleme (100nF kapasitör)
-- Sinyal gürültü önleme için hazır kapasitör yuvaları
+- Sinyal gürültü önleme için her pinde hazır 1206 smd ve dip kapasitör yuvaları
 
-#### Aşırı Gerilim Koruması
-- Zener diyot ile giriş koruması
+#### Pinlerde Aşırı Gerilim Koruması
+- Zener diyot lehimleyerek pinleri koruyabilirsiniz.
 - Her pin için ayrı koruma devresi imkanı
-- SMD ve DIP bileşen uyumlu tasarım
+- 1206 SMD ve DIP bileşen uyumlu tasarım
 
 ### Örnek Uygulamalar
 
@@ -271,6 +293,7 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 >    - Analog pinler (IO0-IO4) I2C için kullanılabilir
 >    - Bu durumda ilgili pin analog giriş olarak kullanılamaz
 >    - Her pin için sadece bir fonksiyon seçilmelidir
+>    - IO2 çevreleme pini olduğundan 4k7 pullup halihazırda mevcuttur.
 >
 > 3. **PWM ve LED Kontrol Öncelikleri:**
 >    - IO10: Adreslenebilir LED kontrolü ve pwm sinyal çıkışı için optimize edilmiş.
@@ -282,7 +305,7 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 1. **RGB LED Odaklı Kullanım:**
    - RGB LED: IO7, IO8, IO9
    - I2C: IO1(4K7 pullup lehimleyin), IO2(4K7 pullup mevcut)
-   - Analog Girişler: IO3, IO4
+   - Analog Girişler: IO0, IO3, IO4
    - WS2812: IO10
 
 2. **I2C Sensör Odaklı Kullanım:**
