@@ -181,7 +181,6 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
 #### GPIO Pinleri
 - IO0-IO10: Genel amaçlı giriş/çıkış pinleri
-- R0-A - R10-A: Analog/Dijital çevre birim bağlantıları
 
 #### Güç ve Kontrol
 - VCC: 6-24V güç girişi
