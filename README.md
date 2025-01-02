@@ -1,5 +1,10 @@
 <div align="center">
-<img src="images/brand/toiot-logo.png" width="400" alt="ToIoT Logo">&nbsp;&nbsp;&nbsp;<img src="images/product/pcb-render.png" width="500" alt="PCB Render">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img src="images/brand/toiot-logo.png" width="400" alt="ToIoT Logo"></td>
+    <td><img src="images/product/pcb-render.png" width="500" alt="PCB Render"></td>
+  </tr>
+</table>
 </div>
 
 # ToDevC3 - ESP32-C3 WROOM Geliştirme Kiti
