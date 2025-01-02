@@ -1,8 +1,8 @@
 <div align="center" style="display: flex; flex-direction: row;">
-  <div>
+  <div style="width: 50%;">
    <img src="images/brand/toiot-logo.png" width="400" alt="ToIoT Logo"> 
   </div>
-  <div>
+  <div style="width: 50%;">
    <img src="images/product/pcb-render.png" width="500" alt="PCB Render"> 
   </div>
 </div>
