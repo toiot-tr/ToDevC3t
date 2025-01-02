@@ -1,14 +1,14 @@
 <div align="center">
-  <img src="images/brand/toiot-logo.png" width="400" alt="ToIoT Logo">
+
+ <img src="images/brand/toiot-logo.png" width="400" alt="ToIoT Logo">  <img src="images/product/pcb-render.png" width="500" alt="PCB Render"> 
+
 </div>
 
-# ToDevC3tf 1.0.0 - ESP32-C3 WROOM Geliştirme Kiti
+# ToDevC3 - ESP32-C3 WROOM Geliştirme Kiti
 
-<div align="center">
-  <img src="images/product/pcb-render.png" width="600" alt="ToDevC3t PCB 3D Render">
-</div>
 
-ToDevC3tf 1.0.0, ESP32-C3 WROOM modülü tabanlı, endüstriyel kullanıma uygun tasarlanmış kullanıma hazır bir geliştirme kitidir.
+
+ToDevC3tf 1.0.0, ESP32-C3-WROOM-02-H4 modülü tabanlı, endüstriyel kullanıma uygun tasarlanmış kullanıma hazır bir geliştirme kitidir.
 
 ## Temel Özellikler
 
