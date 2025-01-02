@@ -1,7 +1,5 @@
 <div align="center">
-
- <img src="images/brand/toiot-logo.png" width="400" alt="ToIoT Logo">  <img src="images/product/pcb-render.png" width="500" alt="PCB Render"> 
-
+<img src="images/brand/toiot-logo.png" width="400" alt="ToIoT Logo">&nbsp;&nbsp;&nbsp;<img src="images/product/pcb-render.png" width="500" alt="PCB Render">
 </div>
 
 # ToDevC3 - ESP32-C3 WROOM Geliştirme Kiti
