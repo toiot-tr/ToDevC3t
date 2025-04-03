@@ -2,7 +2,8 @@
 pio run -t upload --upload-port 3.3.3.3 > tee pyScript/uplog.txt
 */
 
-#pragma once
+#ifndef HEADER_H
+#define HEADER_H
 
 #include <Arduino.h>
 #include <Preferences.h>
@@ -11,9 +12,12 @@ pio run -t upload --upload-port 3.3.3.3 > tee pyScript/uplog.txt
 #include <LittleFS.h>
 #include <Wire.h>
 #include <SPI.h>
+#include "rev.h"
+#include <esp_task_wdt.h>  // Watchdog timer başlık dosyasını ekle
 
-
-
+#include "esp32-hal.h"  
+#include "esp_system.h"
+#include "esp_attr.h"
 
 
 #define FORMAT_LITTLEFS_IF_FAILED true
@@ -25,7 +29,9 @@ QueueHandle_t bledQueue;
 
 
 nvs_handle_t nvsHandle;
-Preferences ayarlar;
+// Kalıcı ayarlar için
+Preferences DevConfig;            // Device Configuration kısaltması
+Preferences ssidlist;            // Device Configuration kısaltması
 
 
 
@@ -49,62 +55,70 @@ Preferences ayarlar;
 #define io21 21 // tx             | 
 
 
-// donanaım
-String Donanim = "ToDevC3tf";  // donanım
-String DonanimVer = "1.0.0"; // donanım versiyonu
-
-// cihaz_ayarları *****************************************************
-// String Model = _VERSION_Project; // donanım
-// String Yazilim = _VERSION_String; // yzlmv   webte versiyon
-String CihazOnEk = "ToD";
-String CihazAdi = "ToDevC3";
+// Donanım bilgileri
+String Hardware = "ToDevC3tf";     // Cihazın donanım modeli
+String HardwareVer = "1.0.0";      // Donanım versiyonu
+String Pre = "ToD";              // Cihaz isim öneki (ToD_ledkontrolcu)
+String DevName = "ToDevC3";     // Cihaz tam adı
 
 #define HataYok_ 0
 #define HataVar_ 1
 
-// Kullanılan pinleri saklamak için bir dizi
-#define PinCakisma_ -2
-#define PinKapali_ -1
-#define PinOk_ 0
-#define PinBosta_ false
-#define PinDolu_ true
-bool PinKullanildi[11] = {PinBosta_}; // 22 pin var varsayıyoruz
+// Pin durumları için sabitler
+#define PinCakisma_ -2            // Pin başka bir işlem için kullanılıyor
+#define PinKapali_ -1             // Pin devre dışı
+#define PinOk_ 0                  // Pin kullanıma hazır
+#define PinBosta_ false           // Pin kullanılmıyor
+#define PinDolu_ true             // Pin kullanımda
+bool PinStatus[11] = {PinBosta_}; // Pin kullanım durumlarını tutan dizi
 
-// i2c_pin **********
-bool I2cOk = false;
-int16_t SdaPin = 8; // i2c master SDA veri gönderme data
-int16_t SclPin = 9; // i2c master SCL veri gönderme cloak
+// I2C pin ayarları
+bool I2cOk = false;               // I2C başlatma durumu
+int16_t SdaPin = 8;              // I2C veri pini
+int16_t SclPin = 9;              // I2C saat pini
 
-// bildirim_ledi_ayarları *****************************************************
-#define BLedChannel_ 0
-#define BLedFrekans_ 1000
-#define BLedResolution_ 8
-#define BLedHata_ -1
-#define BLedAcilis_ 0
-#define BledPortal_ 1
-int16_t BLedPin = io5;
-int8_t BLedSondur = 0;
-int8_t BledDurum = BLedAcilis_;
+// Bildirim LED'i ayarları
+#define BLedChannel_ 0            // LED PWM kanalı
+#define BLedFrekans_ 1000        // LED PWM frekansı
+#define BLedResolution_ 8        // LED PWM çözünürlüğü
+#define BLedHata_ -1             // LED hata durumu
+#define BLedAcilis_ 0            // LED açılış durumu
+#define BledPortal_ 1            // LED portal modu durumu
+#define BLedSendData_ 2          // Veri gönderme bildirimi
+#define BLedWait_ 3              // Bekleme bildirimi
+int16_t BLedPin = io5;           // Bildirim LED'i pini
 
-// buton_ayarları *****************************************************
-#define ButonSifirlaSure_ 5000
-int16_t ButonPin = io6;
-int8_t ButonTetik = false;
+// Buton ayarları
+#define ButonSifirlaSure_ 5000    // Buton sıfırlama için basılı tutma süresi (ms)
+int16_t BtnPin = io6;            // Buton pini
+int8_t BtnTrig = false;          // Buton tetiklenme durumu
+
+// çalışma istatistikleri
+uint32_t UptimeDay = 0;
+uint32_t MaxCpuTemp = 0;
+uint32_t CpuUsage = 0;
+uint32_t WifiUsage = 0;
 
 
 
-
+#include "taskk.h"
 #include "funch.h"
 #include "f_display.h"
 #include "f_sens.h"
 #include "f_time.h"
 #include "f_wifi.h"
-#include "taskk.h"
+#include "utils.h"  // En sona ekleyelim
 
+
+#include "taskk.h"
 #include "funch.h"
 #include "f_display.h"
 #include "f_sens.h"
 #include "f_time.h"
 #include "f_wifi.h"
-#include "taskk.h"
+// #include "wifimanager.h"
+
+
+
+#endif
 

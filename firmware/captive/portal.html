@@ -1,49 +1,63 @@
-#include "header.h"
-
-const char Ayarlar_Html[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToioT</title>
-    <link rel="icon" sizes="any" href="data:image/svg+xml,
-        %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 94 48'%3E
-            %3Cpath fill='%23003366' d='M0 0h36v7h-36z'/%3E
-            %3Cpath fill='%23003366' d='M16 0h8v50h-8z'/%3E
-            %3Ccircle cx='36' cy='20' r='8' fill='none' stroke='%23003366' stroke-width='5'/%3E
-            %3Cpath fill='%2366CCFF' d='M48 6h6v6h-6z'/%3E
-            %3Cpath fill='%2366CCFF' d='M48 14h6v16h-6z'/%3E
-            %3Ccircle cx='66' cy='20' r='8' fill='none' stroke='%2366CCFF' stroke-width='5'/%3E
-            %3Cpath fill='%2366CCFF' d='M74 6h20v5h-20z'/%3E
-            %3Cpath fill='%2366CCFF' d='M82 10h6v20h-6z'/%3E
-        %3C/svg%3E">
+    <title>Ledfly Akıllı Aydınlatma</title>
     <style>
+        /* 1. Renk Değişkenleri */
         :root {
             --bg-primary: #f6f8fa;
+            /* Çok açık gri */
             --bg-secondary: #e9ecef;
+            /* Biraz daha açık */
             --bg-hover: #dee2e6;
+            /* Hover için gri */
             --text-primary: #24292e;
+            /* Koyu gri-siyah */
             --text-secondary: #586069;
+            /* Orta gri */
             --border-color: #d1d5da;
+            /* Kenarlık grisi */
             --shadow-color: rgba(0, 0, 0, 0.15);
+
+            /* Durum renkleri ekleyelim */
             --status-success: #90EE90;
+            /* Açık tema başarılı */
             --status-error: #ffcccb;
+            /* Açık tema hata */
             --status-pending: #c8c803;
+            /* İşlem bekliyor rengi */
         }
+
+        /* Koyu mod renkleri */
         [data-theme="dark"] {
             --bg-primary: #191f27;
+            /* Koyu lacivert */
             --bg-secondary: #1b2634;
+            /* Biraz daha açık lacivert */
             --bg-hover: #2d3239;
+            /* Hover için lacivert */
             --text-primary: antiquewhite;
+            /* Açık gri */
             --text-secondary: #8b949e;
+            /* Orta gri */
             --border-color: #30363d;
+            /* Kenarlık laciverti */
             --shadow-color: rgba(0, 0, 0, 0.5);
+
+            /* Koyu tema durum renkleri */
             --status-success: #1a472a;
+            /* Koyu tema başarılı */
             --status-error: #5c1e1e;
+            /* Koyu tema hata */
             --status-pending: #919101;
+            /* Koyu tema için işlem bekliyor rengi */
         }
+
+        /* 2. Temel Stiller */
         body {
             color: var(--text-primary);
             background-color: var(--bg-primary);
@@ -54,9 +68,12 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             max-width: 400px;
             margin: auto;
         }
+
         ::-webkit-scrollbar {
             display: none;
         }
+
+        /* 3. Spinner Stilleri */
         .spinnerCss {
             position: fixed;
             top: 0;
@@ -69,6 +86,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             z-index: 1;
             background-color: rgba(0, 0, 0, 0.2);
         }
+
         .loading-spinner {
             position: absolute;
             top: 50%;
@@ -81,24 +99,32 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
+
         @keyframes spin {
             0% {
                 transform: translate(-50%, -50%) rotate(0deg);
             }
+
             100% {
                 transform: translate(-50%, -50%) rotate(360deg);
             }
         }
+
         .blur {
             filter: blur(5px);
         }
+
+
+        /* 4. Üst Bar Stilleri */
         .ustbar {
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .statusframe {
+
+        /* Status Frame */
+        .ustbar .statusframe {
             width: 80%;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
@@ -107,8 +133,10 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             margin-left: 15px;
             display: flex;
             flex-direction: column;
+            /* Mesajları dikey sırala */
             justify-content: flex-start;
             align-items: flex-start;
+            /* Sol hizalama için */
             box-shadow: 0 4px 12px var(--shadow-color);
             height: auto;
             min-height: 40px;
@@ -116,6 +144,8 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             padding: 8px;
             overflow: auto;
         }
+
+        /* Status Frame içindeki log mesajları için stil */
         .log-entry {
             width: 100%;
             padding: 2px 5px;
@@ -124,17 +154,24 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             opacity: 0.9;
             transition: opacity 0.3s;
         }
+
+        /* En son gelen log mesajı için stil */
         .log-entry:last-child {
             opacity: 1;
             font-weight: 500;
         }
+
+        /* Theme Button Container */
         .ustbar .themebuton {
             width: 20%;
             display: flex;
             justify-content: flex-end;
         }
+
+        /* Theme Button */
         .ustbar .themebuton button {
             min-width: unset;
+            /* Varsayılan buton stilini geçersiz kıl */
             width: 40px;
             height: 40px;
             font-size: 20px;
@@ -148,9 +185,14 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             align-items: center;
             justify-content: center;
         }
+
+        /* Theme Button Hover Effect */
         .ustbar .themebuton button:hover {
             transform: scale(1.1);
         }
+
+
+        /* 5. WiFi Sinyal Göstergesi */
         .signal-container {
             display: flex;
             flex-direction: column;
@@ -160,24 +202,27 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             height: 50px;
             margin-right: 4px;
         }
+
         .signal-status {
             min-width: 20px;
             margin: 3px;
             margin-top: 5px;
             font-size: 0.60em;
-            color: var(--text-secondary);
+            color: #888;
             line-height: 1;
             max-width: 50px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
         .wifi-signal {
             width: 24px;
             height: 16px;
             position: relative;
             margin-left: 3px;
         }
+
         .wifi-signal .bar {
             width: 3px;
             position: absolute;
@@ -186,22 +231,27 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             border-radius: 1px;
             transition: height 0.2s;
         }
+
         .wifi-signal .bar-1 {
-            left: 0px;
+            left: 00px;
             height: 4px;
         }
+
         .wifi-signal .bar-2 {
             left: 5px;
             height: 8px;
         }
+
         .wifi-signal .bar-3 {
             left: 10px;
             height: 12px;
         }
+
         .wifi-signal .bar-4 {
             left: 15px;
             height: 16px;
         }
+
         .bar-check {
             position: absolute;
             left: 25px;
@@ -210,21 +260,28 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             font-size: 12px;
             color: var(--text-secondary);
         }
+
         .signal-weak .bar-2,
         .signal-weak .bar-3,
         .signal-weak .bar-4 {
             opacity: 0.2;
         }
+
         .signal-fair .bar-3,
         .signal-fair .bar-4 {
             opacity: 0.2;
         }
+
         .signal-good .bar-4 {
             opacity: 0.2;
         }
+
         .signal-full .bar {
             opacity: 1;
         }
+
+
+        /* 6. Bildirim Stilleri */
         .notification {
             position: fixed;
             top: 20px;
@@ -243,18 +300,25 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             border: 1px solid var(--border-color);
             margin: 0 auto;
         }
+
         .notification.show {
             opacity: 1;
         }
+
         .notification.success {
             border-left: 4px solid #28a745;
         }
+
         .notification.error {
             border-left: 4px solid #dc3545;
         }
+
         .notification.info {
             border-left: 4px solid #17a2b8;
         }
+
+
+        /* 7. Buton Stilleri */
         button {
             width: 80%;
             min-width: 100px;
@@ -270,35 +334,56 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             color: black;
             border: none;
         }
+
         .buton:hover {
             transform: scale(1.05);
         }
+
         .btnMid {
             height: 40px;
             min-width: 50px;
             font-size: 12px;
             font-weight: normal;
         }
+
+        /* Renk bazlı kısa buton sınıfları */
         .btnB {
+            /* Blue - En güvenli */
             background-color: aqua;
             color: black;
         }
+
         .btnG {
+            /* Green - Güvenli */
             background-color: greenyellow;
             color: black;
         }
+
         .btnY {
+            /* Yellow - Nötr */
             background-color: yellow;
             color: black;
         }
+
         .btnO {
+            /* Orange - Az riskli */
             background-color: orange;
             color: white;
         }
+
         .btnR {
+            /* Red - Riskli */
             background-color: #ff4444;
             color: white;
         }
+
+
+
+
+
+                
+
+        /* --------- Ana Container Stilleri --------- */
         .main {
             width: 100%;
             margin: auto;
@@ -308,40 +393,72 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             margin-top: 10px;
             align-items: center;
         }
+
         hr {
             width: 200px;
             opacity: 0, 4;
         }
+
+
+
+
+
+
+
+        
+
+        .sayfaBaslik {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .sayfaGovde {
+            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0px 5px 10px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 10px;
+            height: 40px;
+            overflow: hidden;
+            transition: height 500ms;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            border: 1px solid #ef4b25;
+        }
+
         .sayfa {
-            background-color: var(--bg-primary);
-            border-radius: 15px;
-            box-shadow: 0 4px 12px var(--shadow-color);
-            width: 100%;
-            height: 100%;
-            margin-bottom: 25px;
-            margin-top: 25px;
+            display: flex;
             flex-direction: column;
             align-items: center;
+            height: 600px;
         }
-        .sayfaLabel {
+
+        .ayarsayfa {
+            height: 100%;
             width: 100%;
-            height: 30px;
+            margin-bottom: 5px;
+            margin-top: 5px;
+            /* padding: 10px; */
+            overflow-y: auto;
             display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
-            font-weight: 600;
         }
-        label {
-            width: 100%;
-            margin: auto;
-            margin-left: 2%;
-            margin-right: 2%;
+
+        .arrow {
+            width: 30px;
+            height: 30px;
             display: flex;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 400;
+            transition: transform 500ms;
         }
+
+
+
+
+
+
+
         .formGrup {
             width: 90%;
             margin: auto;
@@ -352,18 +469,33 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             align-items: center;
             background-color: transparent;
         }
+
         .formIsim {
             width: 55%;
             display: flex;
             flex-direction: row;
             justify-content: left;
         }
+
         .formGiris {
             width: 45%;
             display: flex;
             flex-direction: row;
             justify-content: right;
         }
+
+
+
+
+
+
+
+
+
+
+
+        
+        /* --------- Input ve Select Stilleri --------- */
         input,
         select {
             width: 100%;
@@ -378,23 +510,28 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             color: var(--text-primary);
             border: 1px solid var(--border-color);
         }
+
         select {
             text-align-last: center;
             display: flex;
         }
+
         input:disabled {
             background-color: var(--bg-hover);
             color: var(--text-secondary);
             opacity: 0.7;
         }
+
         input.veri {
             background-color: var(--bg-primary);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
         }
+
         .veri {
             border: none;
         }
+
         .infoo {
             min-width: 200px;
             height: 35px;
@@ -404,20 +541,27 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             font-weight: 600;
             border: 1px solid grey;
         }
+
+
+
+
+
+
+
         .verigosteccs {
             width: 80px;
             height: 30px;
-            min-width: 80px;
-            min-height: 20px;
+            min-width: 70px;
             outline: 0;
             border-width: 2px 0 2px;
-            background-color: #eee;
+            border-color: grey;
             background-color: transparent;
             text-align: center;
             justify-content: center;
             font-size: 18px;
             font-weight: 800;
         }
+
         .gucbar {
             margin-top: 5px;
             margin-bottom: 5px;
@@ -428,6 +572,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             border: 1px solid var(--border-color);
             justify-content: center;
         }
+
         .slider {
             -webkit-appearance: none;
             appearance: none;
@@ -440,6 +585,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             margin-top: 10px;
             border: none;
         }
+
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -452,7 +598,8 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
         }
     </style>
 </head>
-<body onload="loadData()">
+
+<body onload="yuklendi()">
     <div id="spinnerid" class="spinnerCss">
         <div class="loading-spinner"></div>
     </div>
@@ -468,46 +615,54 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                 </div>
                 <div class="signal-status" id="currentSsid"></div>
             </div>
+
             <div class="statusframe">
+                <!-- Buraya bildirimler gelecek -->
             </div>
+
             <div class="themebuton">
                 <button onclick="toggleTheme()">🌓</button>
             </div>
         </div>
     </div>
-    <div class="main" id="mesajdivid" style="display: none; margin-top: 150px;">
+    <div class="main" id="mesajdivid" style="display: none;">
     </div>
     <div class="main" id="mainDivid" style="display: none;">
-        <div class="formGrup">
-            <form action="home.html" method="GET"
-                onsubmit="document.getElementById('gBtnid').innerHTML='Yükleniyor...'">
-                <button id="gBtnid" type="submit">Giriş</button>
-            </form>
-            </form>
-            <form action="portal.html" method="GET"
-                onsubmit="document.getElementById('pBtnid').innerHTML='Yükleniyor...'">
-                <button id="pBtnid" type="submit">Portal</button>
-            </form>
+        <div class="sayfaGovde">
+            <div class="sayfaBaslik">
+                <div>İnfo</div>
+                <svg class="arrow"></svg>
+            </div>
+            <div class="sayfa">
+                <div class="ayarsayfa" id="infoSayfaid">
+                    <div class="formGrup">
+                        <form action="home.html" method="GET"
+                            onsubmit="document.getElementById('gBtnid').innerHTML='Yükleniyor...'"><button id="gBtnid"
+                                type="submit" style="height: 40px; width: 200px;">Giriş</button></form>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <br>
-        <div class="formGrup">
-            <small>
-                • * işaretli ayarlar resetten sonra aktif olur<br>
-                • ** işaretli ayarlar resetten önce kısmen aktif olur<br>
-            </small>
-        </div>
+        <!-- ----------------------------sens--------------------------- -->
         <div class="formGrup">
         </div>
         <div>
+            <!-- <hr> -->
             <div class="formGrup">
+                <!-- <label style="justify-content: right;">set </label> -->
                 <input class="verigosteccs" disabled id="setVeriid">
                 <input class="verigosteccs" disabled id="gucVeriid" type="button">
                 <input class="verigosteccs" disabled id="sensVeriid">
+                <!-- <label style="justify-content: left;"> sens</label> -->
             </div>
+            <!-- <hr> -->
         </div>
         <div class="formGrup">
         </div>
+        <!-- ----------------------------guc bar--------------------------- -->
         <div>
+            <!-- <hr> -->
             <div id="gucBarDivid">
                 <div class="formGrup">
                     <div class="gucbar">
@@ -516,193 +671,65 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                     </div>
                 </div>
             </div>
+            <!-- <hr> -->
         </div>
         <div class="formGrup">
         </div>
+        <!-- ----------------------------butonlar--------------------------- -->
+
+        <!-- <hr> -->
         <div class="formGrup">
             <button class="buton" style="background-color: orange;" onclick="komutbtn('reset')">Reset</button>
             <button class="buton" style="background-color: rgb(0, 255, 213);" onclick="veriiste()">Yenile</button>
-            <button class="buton" style="background-color: red;" onclick="komutbtn('restore')">Sifirla</button>
-        </div>
-        <div class="formGrup">
         </div>
     </div>
+</body>
 <script>
-    const mesajDiv = document.getElementById("mesajdivid");
-    const mainContent = document.getElementById('mainDivid');
-    const spinner = document.getElementById('spinnerid');
-    const wifiSignal = document.querySelector('.wifi-signal');
-    const portalIcon = document.getElementById('portalIcon');
-    const currentSsid = document.getElementById('currentSsid');
-    const setVeri = document.getElementById('setVeriid');
-    const gucVeri = document.getElementById('gucVeriid');
-    const sensVeri = document.getElementById('sensVeriid');
-    const gucBar = document.getElementById('gucBarid');
-    let ayarlar = {};
-    let infoo = {};
-    /* --------- Tema Yönetimi --------- */
-    if (!window.matchMedia || !window.matchMedia('(prefers-color-scheme: light)').matches) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    }
-    function toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        }
+
+    let mesajDiv = document.getElementById("mesajdivid");
+    let mainContent = document.getElementById('mainDivid');
+    let spinner = document.getElementById('spinnerid');
+    let setVeri = document.getElementById('setVeriid');
+    let gucVeri = document.getElementById('gucVeriid');
+    let sensVeri = document.getElementById('sensVeriid');
+    let gucBar = document.getElementById('gucBarid');
+
+
+    let okicon = `<svg version="1.1" viewBox="1 0 18 20" style="width: 30px ; height: 30px;" id="XMLID_225_">
+<line x1="0" y1="5" x2="10.75" y2="15" stroke="black" stroke-width="2" />
+<line x1="9.32" y1="15" x2="20" y2="5" stroke="black" stroke-width="2" />
+</svg>`;
+
+    let arrowElements = document.querySelectorAll('.arrow');
+    arrowElements.forEach((arrowElement) => {
+        arrowElement.innerHTML = okicon;
     });
-    function getSignalClass(rssi) {
-        if (rssi >= -50) return 'signal-full';
-        if (rssi >= -65) return 'signal-good';
-        if (rssi >= -75) return 'signal-fair';
-        return 'signal-weak';
-    }
-    /* --------- Spinner İşlemleri --------- */
-    function SpinnerGoster() {
-        spinner.style.display = 'flex';
-        mainContent.classList.add('blur');
-    }
-    function SpinnerGizle() {
-        spinner.style.display = 'none';
-        mainContent.classList.remove('blur');
-    }
-    /* --------- Sayfa Yükleme ve Form İşlemleri --------- */
-    function loadData() {
-        if (window.innerWidth < 340) {
-            document.body.style.zoom = "0.6";
-        }
-        else if (window.innerWidth < 400) {
-            document.body.style.zoom = "0.8";
-        }
-        formuBaslat();
-        ayrGonderInit();
-        if (Object.keys(ayarlar).length === 0) {
-            console.log('Test ortamında çalışıyor...');
-        }
-        const selectAyarlar = document.querySelectorAll('.veri');
-        selectAyarlar.forEach(element => {
-            const ayarAdi = element.dataset.ayarAdi;
-            if (ayarAdi && ayarlar[ayarAdi] !== undefined) {
-                element.value = ayarlar[ayarAdi];
-            }
-        });
-        document.querySelectorAll('.infoo').forEach(element => {
-            const infoAdi = element.dataset.ayarAdi;
-            element.value = infoo[infoAdi] || '';
-        });
-        if (infoo.WifiStatus) {
-            const signalClass = getSignalClass(infoo.Rssi);
-            wifiSignal.className = `wifi-signal ${signalClass}`;
-            currentSsid.textContent = infoo.CurrentSSID;
-        }
-        portalIcon.style.display = infoo.PortalStatus ? 'block' : 'none';
-        mainContent.style.display = 'block';
-        setInterval(veriiste, 60000);
-    }
-    function veriiste() {
-        let xmlhttp = new XMLHttpRequest();
-        xmlhttp.timeout = 8000;
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4) {
-                if (this.status == 200) {
-                    let jsonData = JSON.parse(this.responseText);
-                    if (jsonData.info) {
-                        const infoElements = document.querySelectorAll('.infoo');
-                        infoElements.forEach(element => {
-                            const infoAdi = element.dataset.ayarAdi;
-                            if (jsonData.info[infoAdi]) {
-                                element.value = jsonData.info[infoAdi];
-                            }
-                        });
-                        if (jsonData.info.WifiStatus) {
-                            const signalClass = getSignalClass(jsonData.info.Rssi);
-                            wifiSignal.className = `wifi-signal ${signalClass}`;
-                            currentSsid.textContent = jsonData.info.CurrentSSID;
-                        } else {
-                            wifiSignal.className = 'wifi-signal signal-weak';
-                            currentSsid.textContent = 'Bağlı değil';
-                        }
-                        portalIcon.style.display = jsonData.info.PortalStatus ? 'block' : 'none';
+
+    const sayfaBasliklar = document.querySelectorAll('.sayfaBaslik');
+    const sayfaGovdeler = document.querySelectorAll('.sayfaGovde');
+    const sayfaArrow = document.querySelectorAll('.arrow');
+    sayfaBasliklar.forEach((sayfaBaslik, index) => {
+        sayfaBaslik.addEventListener('click', () => {
+            const currentHeight = parseInt(sayfaGovdeler[index].style.height);
+
+            sayfaGovdeler.forEach((sayfaGovde, idx) => {
+                if (idx === index) {
+                    if (currentHeight === 40) {
+                        sayfaGovde.style.height = '650px';
+                        sayfaArrow[idx].style.transform = 'rotate(180deg)';
+                    } else {
+                        sayfaGovde.style.height = '40px';
+                        sayfaArrow[idx].style.transform = 'rotate(0deg)';
                     }
-                    if (jsonData.notification) {
-                        showNotification(jsonData.notification.message, jsonData.notification.type);
-                    }
-                    if (jsonData.message) {
-                        addStatusLog(jsonData.message);
-                    }
+                } else {
+                    sayfaGovde.style.height = '40px';
+                    sayfaArrow[idx].style.transform = 'rotate(0deg)';
                 }
-            }
-        };
-        xmlhttp.open("DAT", "/ayarlar.html");
-        xmlhttp.send();
-    }
-    /* --------- ESP32 İletişim Fonksiyonları --------- */
-    async function fetchWithTimeout(resource, options = {}) {
-        const { timeout = 8000 } = options;
-        const controller = new AbortController();
-        const id = setTimeout(() => controller.abort(), timeout);
-        try {
-            const response = await fetch(resource, {
-                ...options,
-                signal: controller.signal
             });
-            clearTimeout(id);
-            return response;
-        } catch (error) {
-            clearTimeout(id);
-            if (error.name === 'AbortError') {
-                throw new Error('Bağlantı zaman aşımına uğradı');
-            }
-            throw error;
-        }
-    }
-    /* --------- Bildirim İşlemleri --------- */
-    function showNotification(message, type = 'info', duration = 3000) {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
-        document.body.appendChild(notification);
-        setTimeout(() => notification.classList.add('show'), 10);
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => notification.remove(), 300);
-        }, duration);
-    }
-    /* --------- Durum Log İşlemleri --------- */
-    function addStatusLog(message) {
-        const statusFrame = document.querySelector('.statusframe');
-        const logEntry = document.createElement('div');
-        logEntry.className = 'log-entry';
-        logEntry.textContent = message;
-        statusFrame.appendChild(logEntry);
-        statusFrame.scrollTop = statusFrame.scrollHeight;
-        while (statusFrame.children.length > 5) {
-            statusFrame.removeChild(statusFrame.firstChild);
-        }
-    }
-    /* --------- Sayfa Yükleme ve Form İşlemleri --------- */
-    function sayfaEkle(baslikMetni, sayfaNumarasi) {
-        const sayfaId = 'sayfa' + sayfaNumarasi;
-        const sayfaDiv = document.createElement('div');
-        sayfaDiv.id = sayfaId;
-        sayfaDiv.classList.add('sayfa');
-        const formGrupDiv = document.createElement('div');
-        formGrupDiv.className = 'formGrup';
-        const etiket = document.createElement('label');
-        etiket.className = 'sayfaLabel';
-        etiket.textContent = baslikMetni;
-        formGrupDiv.appendChild(etiket);
-        sayfaDiv.appendChild(formGrupDiv);
-        const mainDiv = document.getElementById('mainDivid');
-        const hedefChild = mainDiv.children[sayfaNumarasi];
-        mainDiv.insertBefore(sayfaDiv, hedefChild);
-    }
-    function formGrupOlustur(etiketMetni, ayarAdi = '', selectEnabled, visible, sayfaNumarasi, bileşenTipi = 'sel', secenekler = []) {
+        });
+    });
+
+    function formGrupOlustur(etiketMetni, selectEnabled, visible, hedefId, bileşenTipi = 'sel', secenekler = []) {
         const formGrupDiv = document.createElement('div');
         formGrupDiv.className = 'formGrup';
         formGrupDiv.style.display = visible ? 'flex' : 'none';
@@ -719,7 +746,6 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                 const select = document.createElement('select');
                 select.className = 'veri';
                 select.disabled = !selectEnabled;
-                select.dataset.ayarAdi = ayarAdi;
                 secenekList.forEach(secenek => {
                     const opt = document.createElement('option');
                     opt.value = secenek[0];
@@ -734,124 +760,229 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             input.type = 'text';
             input.className = 'veri';
             input.disabled = !selectEnabled;
-            input.dataset.ayarAdi = ayarAdi;
             formGirisDiv.appendChild(input);
         } else if (bileşenTipi === 'num') {
             const input = document.createElement('input');
             input.type = 'number';
             input.className = 'veri';
             input.disabled = !selectEnabled;
-            input.dataset.ayarAdi = ayarAdi;
             formGirisDiv.appendChild(input);
         } else if (bileşenTipi === 'info') {
             const input = document.createElement('input');
             input.type = 'text';
             input.className = 'infoo';
             input.disabled = true;
-            input.dataset.ayarAdi = ayarAdi;
             formGirisDiv.appendChild(input);
         }
         formGrupDiv.appendChild(formGirisDiv);
-        const hedefDiv = document.getElementById(`sayfa${sayfaNumarasi}`);
+        const hedefDiv = document.getElementById(hedefId);
         hedefDiv.classList.add('sayfa');
         hedefDiv.appendChild(formGrupDiv);
     }
+
     function formuBaslat() {
-        let sNo = 3;
-        sNo++;
-        sayfaEkle('Cihaz Ayarları', sNo)
-        formGrupOlustur('*Cihaz Adı', 'DevName', 1, 1, sNo, 'txt');
-        sNo++;
-        sayfaEkle('İnfo', sNo)
-        formGrupOlustur('Son Alınan Ip', 'LastIP', 1, 1, sNo, 'info');
-        formGrupOlustur('Version', 'Version', 1, 1, sNo, 'info');
-        formGrupOlustur('Donanım', 'Hardware', 1, 1, sNo, 'info');
-        formGrupOlustur('Yazılım', 'DevSoftware', 1, 1, sNo, 'info');
-        formGrupOlustur('Yükleme Zamanı', 'BuildTime', 1, 1, sNo, 'info');
-        formGrupOlustur('Mac', 'DevMac', 1, 1, sNo, 'info');
-        formGrupOlustur('Zaman', 'DevTime', 1, 1, sNo, 'info');
-        sNo++;
+
+        let sNo = 'infoSayfaid';
+        formGrupOlustur('Cihaz Modeli', 1, 1, sNo, 'info');
+        formGrupOlustur('Donanım', 1, 1, sNo, 'info');
+        formGrupOlustur('Yazılım', 1, 1, sNo, 'info');
+        formGrupOlustur('Yükleme Zamanı', 1, 1, sNo, 'info');
+        formGrupOlustur('Mac', 1, 1, sNo, 'info');
+        formGrupOlustur('Zaman', 1, 1, sNo, 'info');
+        formGrupOlustur('AKIM', 1, 1, sNo, 'info');
+        formGrupOlustur('300V', 1, 1, sNo, 'info');
+        formGrupOlustur('24V', 1, 1, sNo, 'info');
+        formGrupOlustur('NTC', 1, 1, sNo, 'info');
+        formGrupOlustur('Gönderi (ok/fail)', 1, 1, sNo, 'info');
+        formGrupOlustur('Gelen Mesajlar', 1, 1, sNo, 'info');
     }
-    async function guncelleAyar(selectElement) {
-        selectElement.style.backgroundColor = 'var(--status-pending)';
-        try {
-            const response = await fetchWithTimeout(
-                `/${selectElement.dataset.ayarAdi}=${selectElement.value}`,
-                {
-                    method: 'SET',
-                    timeout: 10000
-                }
-            );
-            const responseData = await response.json();
-            selectElement.value = responseData.cevap;
-            if (responseData.durum === 'ok') {
-                selectElement.style.backgroundColor = 'var(--status-success)';
-            } else {
-                selectElement.style.backgroundColor = 'var(--status-error)';
-            }
-        } catch (error) {
-            selectElement.style.backgroundColor = 'red';
-            mainContent.style.display = 'none';
-            mesajDiv.style.display = 'flex';
-            mesajDiv.style.fontSize = '20px';
-            mesajDiv.style.color = '#ff3333';
-            mesajDiv.innerHTML = "İşlemci yanıt vermedi, sayfa yeniden yükleniyor...";
-            setTimeout(() => {
+
+    function SpinnerGoster() {
+        spinner.style.display = 'flex';
+        mainContent.classList.add('blur');
+    }
+
+    function SpinnerGizle() {
+        spinner.style.display = 'none';
+        mainContent.classList.remove('blur');
+    }
+
+    function yuklendi() {
+        if (window.innerWidth < 340) {
+            document.body.style.zoom = "0.6";
+        } else if (window.innerWidth < 400) {
+            document.body.style.zoom = "0.8";
+        }
+        mainContent.style.display = 'block';
+        SpinnerGoster();
+        formuBaslat();
+        setTimeout(function () {
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.timeout = 15000;
+            xmlhttp.ontimeout = function () {
                 location.reload();
-            }, 5000);
-        }
-    }
-    function ayrGonderInit() {
-        const selectElements = document.querySelectorAll('.veri');
-        selectElements.forEach(selectElement => {
-            selectElement.addEventListener('change', () => guncelleAyar(selectElement));
-        });
-    }
-    async function komutbtn(komut, data = {}) {
-        let timeout = 8000;
-        let requestData = {
-        };
-        try {
-            SpinnerGoster();
-            const response = await fetchWithTimeout("/" + komut + ".btn", {
-                method: 'BTN',
-                headers: { 'Content-Type': 'application/json' },
-                body: "<<json|" + JSON.stringify(requestData) + "|json>>",
-                timeout: timeout
-            });
-            const responseData = await response.json();
-            if (responseData.info) {
-                const infoElements = document.querySelectorAll('.infoo');
-                infoElements.forEach(element => {
-                    const infoAdi = element.dataset.ayarAdi;
-                    if (responseData.info[infoAdi]) {
-                        element.value = responseData.info[infoAdi];
+            };
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        SpinnerGizle();
+                        let jsonData = JSON.parse(this.responseText);
+                        const selectInfo = document.querySelectorAll('.infoo');
+                        selectInfo.forEach((selectInfo, index) => {
+                            if (jsonData.infoo && jsonData.infoo[index] !== undefined) {
+                                selectInfo.value = jsonData.infoo[index];
+                            }
+                        });
+                        setVeri.value = jsonData.SetVeri;
+                        gucVeri.value = jsonData.GucVeri;
+                        sensVeri.value = jsonData.SensVeri;
+                        gucBar.value = jsonData.GucBar;
+                        setInterval(veriiste, 30000);
+                    } else {
+                        SpinnerGizle();
+                        return;
+                        mainContent.style.display = 'none';
+                        mesajDiv.style.display = 'flex';
+                        mesajDiv.innerHTML = "Yanıt alınamadı sayfa yeniden yükleniyor..";
+                        setTimeout(function () {
+                            location.reload();
+                        }, 5000);
                     }
-                });
-                if (jsonData.info.WifiStatus) {
-                    const signalClass = getSignalClass(jsonData.info.Rssi);
-                    wifiSignal.className = `wifi-signal ${signalClass}`;
-                    currentSsid.textContent = jsonData.info.CurrentSSID;
-                } else {
-                    wifiSignal.className = 'wifi-signal signal-weak';
-                    currentSsid.textContent = 'Bağlı değil';
                 }
-                portalIcon.style.display = jsonData.info.PortalStatus ? 'block' : 'none';
+            };
+
+            xmlhttp.open("OKU", "/portalyuklendi.yukle");
+            xmlhttp.send();
+        }, 500);
+    }
+
+    function komutbtn(hangiBtn) {
+        mainContent.style.display = 'none';
+        mesajDiv.style.display = 'flex';
+        mesajDiv.innerHTML = "Komut işleniyor..";
+        SpinnerGoster();
+        window.scrollTo(0, 0);
+        let veri;
+        if (hangiBtn == "reset") {
+            veri = "reset.buton";
+        } else if (hangiBtn == "sifirla") {
+            veri = "sifirla.buton";
+        }
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.timeout = 10000;
+        xmlhttp.ontimeout = function () {
+            location.reload();
+        };
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                SpinnerGizle();
+                mesajDiv.innerHTML = this.responseText;
             }
-            if (responseData.message) {
-                addStatusLog(responseData.message);
+        };
+        xmlhttp.open("BTN", veri);
+        xmlhttp.send();
+    }
+
+    function gucGonder() {
+        let json = JSON.stringify({
+            ["GucBar"]: gucBar.value
+        });
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.timeout = 10000;
+        xmlhttp.ontimeout = function () {
+            location.reload();
+        };
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
             }
-            if (responseData.notification) {
-                showNotification(responseData.notification.message, responseData.notification.type);
+            else if (this.readyState == 4 && this.status == 400) {
+                mainContent.style.display = 'none';
+                mesajDiv.style.display = 'flex';
+                mesajDiv.innerHTML = this.responseText;
+                location.reload();
             }
-            SpinnerGizle();
-        } catch (error) {
-            SpinnerGizle();
-            showNotification(error.message, 'error');
-            console.error('Hata:', error);
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+        };
+        xmlhttp.open('SET', '/gucbar');
+        xmlhttp.send("<<json|" + json + "|json>>");
+    }
+
+    function veriiste() {
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.timeout = 10000;
+        xmlhttp.ontimeout = function () {
+        };
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let jsonData = JSON.parse(this.responseText);
+                const selectInfo = document.querySelectorAll('.infoo');
+                selectInfo.forEach((selectInfo, index) => {
+                    selectInfo.value = jsonData.infoo[index];
+                });
+                setVeri.value = jsonData.SetVeri;
+                gucVeri.value = jsonData.GucVeri;
+                sensVeri.value = jsonData.SensVeri;
+                gucBar.value = jsonData.GucBar;
+            }
+        };
+        xmlhttp.open("OKU", "/portalyenile.yenile");
+        xmlhttp.send();
+    }
+
+    /* Tema yönetimi */
+    if (!window.matchMedia || !window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+    });
+
+    function getSignalClass(rssi) {
+        if (rssi >= -50) return 'signal-full';
+        if (rssi >= -65) return 'signal-good';
+        if (rssi >= -75) return 'signal-fair';
+        return 'signal-weak';
+    }
+
+    /* Bildirim gösterme fonksiyonu */
+    function showNotification(message, type = 'info', duration = 3000) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => notification.classList.add('show'), 10);
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, duration);
+    }
+
+    /* Status frame'e log ekleme fonksiyonu */
+    function addStatusLog(message) {
+        const statusFrame = document.querySelector('.statusframe');
+        const logEntry = document.createElement('div');
+        logEntry.className = 'log-entry';
+        logEntry.textContent = message;
+        statusFrame.appendChild(logEntry);
+        statusFrame.scrollTop = statusFrame.scrollHeight;
+
+        while (statusFrame.children.length > 5) {
+            statusFrame.removeChild(statusFrame.firstChild);
         }
     }
-)rawliteral";
+</script>
+
+</html>

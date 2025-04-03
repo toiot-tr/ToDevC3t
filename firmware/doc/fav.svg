@@ -1,0 +1,33 @@
+<svg id="svg-favicon" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 94 48">
+    <!-- İlk T - koyu mavi -->
+    <!-- Yatay çizgi -->
+    <path fill="#003366" d="M0 0 h36 v7 h-36 z"/>
+    <!-- Dikey çizgi -->
+    <path fill="#003366" d="M16 0 h8 v50 h-8 z"/>
+    
+    <!-- O - koyu mavi çember -->
+    <circle cx="36" cy="20" r="8" 
+        fill="none" 
+        stroke="#003366" 
+        stroke-width="5"
+    />
+    
+    <!-- i - açık mavi -->
+    <!-- Nokta -->
+    <path fill="#66CCFF" d="M48 6 h6 v6 h-6 z"/>
+    <!-- Çizgi -->
+    <path fill="#66CCFF" d="M48 14 h6 v16 h-6 z"/>
+    
+    <!-- O - açık mavi çember -->
+    <circle cx="66" cy="20" r="8" 
+        fill="none" 
+        stroke="#66CCFF" 
+        stroke-width="5"
+    />
+    
+    <!-- Son T - açık mavi -->
+    <!-- Yatay çizgi -->
+    <path fill="#66CCFF" d="M74 6 h20 v5 h-20 z"/>
+    <!-- Dikey çizgi -->
+    <path fill="#66CCFF" d="M82 10 h6 v20 h-6 z"/>
+</svg>

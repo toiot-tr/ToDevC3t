@@ -1,8 +1,6 @@
-#include "header.h"
-
-const char Ayarlar_Html[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,6 +18,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             %3Cpath fill='%2366CCFF' d='M82 10h6v20h-6z'/%3E
         %3C/svg%3E">
     <style>
+        /* Renk değişkenleri */
         :root {
             --bg-primary: #f6f8fa;
             --bg-secondary: #e9ecef;
@@ -32,6 +31,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             --status-error: #ffcccb;
             --status-pending: #c8c803;
         }
+
         [data-theme="dark"] {
             --bg-primary: #191f27;
             --bg-secondary: #1b2634;
@@ -44,6 +44,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             --status-error: #5c1e1e;
             --status-pending: #919101;
         }
+
         body {
             color: var(--text-primary);
             background-color: var(--bg-primary);
@@ -54,9 +55,11 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             max-width: 400px;
             margin: auto;
         }
+
         ::-webkit-scrollbar {
             display: none;
         }
+
         .spinnerCss {
             position: fixed;
             top: 0;
@@ -69,6 +72,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             z-index: 1;
             background-color: rgba(0, 0, 0, 0.2);
         }
+
         .loading-spinner {
             position: absolute;
             top: 50%;
@@ -81,23 +85,30 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
+
         @keyframes spin {
             0% {
                 transform: translate(-50%, -50%) rotate(0deg);
             }
+
             100% {
                 transform: translate(-50%, -50%) rotate(360deg);
             }
         }
+
         .blur {
             filter: blur(5px);
         }
+
+        /* ================ ÜST BAR STİLLERİ ================ */
         .ustbar {
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
+        /* Status Frame */
         .statusframe {
             width: 80%;
             background: var(--bg-secondary);
@@ -116,6 +127,8 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             padding: 8px;
             overflow: auto;
         }
+
+        /* Log mesajları için stil */
         .log-entry {
             width: 100%;
             padding: 2px 5px;
@@ -124,15 +137,20 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             opacity: 0.9;
             transition: opacity 0.3s;
         }
+
         .log-entry:last-child {
             opacity: 1;
             font-weight: 500;
         }
+
+        /* Theme Button Container */
         .ustbar .themebuton {
             width: 20%;
             display: flex;
             justify-content: flex-end;
         }
+
+        /* Theme Button */
         .ustbar .themebuton button {
             min-width: unset;
             width: 40px;
@@ -148,9 +166,14 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             align-items: center;
             justify-content: center;
         }
+
         .ustbar .themebuton button:hover {
             transform: scale(1.1);
         }
+
+
+
+        /* WiFi sinyal göstergesi */
         .signal-container {
             display: flex;
             flex-direction: column;
@@ -160,6 +183,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             height: 50px;
             margin-right: 4px;
         }
+
         .signal-status {
             min-width: 20px;
             margin: 3px;
@@ -172,12 +196,14 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
         .wifi-signal {
             width: 24px;
             height: 16px;
             position: relative;
             margin-left: 3px;
         }
+
         .wifi-signal .bar {
             width: 3px;
             position: absolute;
@@ -186,22 +212,27 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             border-radius: 1px;
             transition: height 0.2s;
         }
+
         .wifi-signal .bar-1 {
             left: 0px;
             height: 4px;
         }
+
         .wifi-signal .bar-2 {
             left: 5px;
             height: 8px;
         }
+
         .wifi-signal .bar-3 {
             left: 10px;
             height: 12px;
         }
+
         .wifi-signal .bar-4 {
             left: 15px;
             height: 16px;
         }
+
         .bar-check {
             position: absolute;
             left: 25px;
@@ -210,21 +241,27 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             font-size: 12px;
             color: var(--text-secondary);
         }
+
         .signal-weak .bar-2,
         .signal-weak .bar-3,
         .signal-weak .bar-4 {
             opacity: 0.2;
         }
+
         .signal-fair .bar-3,
         .signal-fair .bar-4 {
             opacity: 0.2;
         }
+
         .signal-good .bar-4 {
             opacity: 0.2;
         }
+
         .signal-full .bar {
             opacity: 1;
         }
+
+        /* Bildirim stili */
         .notification {
             position: fixed;
             top: 20px;
@@ -243,18 +280,27 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             border: 1px solid var(--border-color);
             margin: 0 auto;
         }
+
         .notification.show {
             opacity: 1;
         }
+
         .notification.success {
             border-left: 4px solid #28a745;
         }
+
         .notification.error {
             border-left: 4px solid #dc3545;
         }
+
         .notification.info {
             border-left: 4px solid #17a2b8;
         }
+
+
+
+
+        /* --------- Buton Stilleri --------- */
         button {
             width: 80%;
             min-width: 100px;
@@ -270,35 +316,54 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             color: black;
             border: none;
         }
+
         .buton:hover {
             transform: scale(1.05);
         }
+
         .btnMid {
             height: 40px;
             min-width: 50px;
             font-size: 12px;
             font-weight: normal;
         }
+
+
+        /* Renk bazlı kısa buton sınıfları */
         .btnB {
+            /* Blue - En güvenli */
             background-color: aqua;
             color: black;
         }
+
         .btnG {
+            /* Green - Güvenli */
             background-color: greenyellow;
             color: black;
         }
+
         .btnY {
+            /* Yellow - Nötr */
             background-color: yellow;
             color: black;
         }
+
         .btnO {
+            /* Orange - Az riskli */
             background-color: orange;
             color: white;
         }
+
         .btnR {
+            /* Red - Riskli */
             background-color: #ff4444;
             color: white;
         }
+
+
+
+
+        /* --------- Ana Container Stilleri --------- */
         .main {
             width: 100%;
             margin: auto;
@@ -308,10 +373,12 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             margin-top: 10px;
             align-items: center;
         }
+
         hr {
             width: 200px;
             opacity: 0, 4;
         }
+
         .sayfa {
             background-color: var(--bg-primary);
             border-radius: 15px;
@@ -323,6 +390,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             flex-direction: column;
             align-items: center;
         }
+
         .sayfaLabel {
             width: 100%;
             height: 30px;
@@ -332,6 +400,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             font-size: 18px;
             font-weight: 600;
         }
+
         label {
             width: 100%;
             margin: auto;
@@ -342,6 +411,10 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             font-size: 18px;
             font-weight: 400;
         }
+
+
+
+        /* --------- Form Elemanları --------- */
         .formGrup {
             width: 90%;
             margin: auto;
@@ -352,18 +425,22 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             align-items: center;
             background-color: transparent;
         }
+
         .formIsim {
             width: 55%;
             display: flex;
             flex-direction: row;
             justify-content: left;
         }
+
         .formGiris {
             width: 45%;
             display: flex;
             flex-direction: row;
             justify-content: right;
         }
+
+        /* --------- Input ve Select Stilleri --------- */
         input,
         select {
             width: 100%;
@@ -378,23 +455,28 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             color: var(--text-primary);
             border: 1px solid var(--border-color);
         }
+
         select {
             text-align-last: center;
             display: flex;
         }
+
         input:disabled {
             background-color: var(--bg-hover);
             color: var(--text-secondary);
             opacity: 0.7;
         }
+
         input.veri {
             background-color: var(--bg-primary);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
         }
+
         .veri {
             border: none;
         }
+
         .infoo {
             min-width: 200px;
             height: 35px;
@@ -404,6 +486,10 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             font-weight: 600;
             border: 1px solid grey;
         }
+
+
+
+
         .verigosteccs {
             width: 80px;
             height: 30px;
@@ -418,6 +504,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             font-size: 18px;
             font-weight: 800;
         }
+
         .gucbar {
             margin-top: 5px;
             margin-bottom: 5px;
@@ -428,6 +515,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             border: 1px solid var(--border-color);
             justify-content: center;
         }
+
         .slider {
             -webkit-appearance: none;
             appearance: none;
@@ -440,6 +528,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             margin-top: 10px;
             border: none;
         }
+
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -452,6 +541,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
         }
     </style>
 </head>
+
 <body onload="loadData()">
     <div id="spinnerid" class="spinnerCss">
         <div class="loading-spinner"></div>
@@ -468,8 +558,11 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                 </div>
                 <div class="signal-status" id="currentSsid"></div>
             </div>
+
             <div class="statusframe">
+                <!-- Buraya bildirimler gelecek -->
             </div>
+
             <div class="themebuton">
                 <button onclick="toggleTheme()">🌓</button>
             </div>
@@ -496,6 +589,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                 • ** işaretli ayarlar resetten önce kısmen aktif olur<br>
             </small>
         </div>
+        <!-- ----------------------------sens--------------------------- -->
         <div class="formGrup">
         </div>
         <div>
@@ -507,6 +601,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
         </div>
         <div class="formGrup">
         </div>
+        <!-- ----------------------------guc bar--------------------------- -->
         <div>
             <div id="gucBarDivid">
                 <div class="formGrup">
@@ -519,6 +614,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
         </div>
         <div class="formGrup">
         </div>
+        <!-- ----------------------------butonlar--------------------------- -->
         <div class="formGrup">
             <button class="buton" style="background-color: orange;" onclick="komutbtn('reset')">Reset</button>
             <button class="buton" style="background-color: rgb(0, 255, 213);" onclick="veriiste()">Yenile</button>
@@ -527,6 +623,7 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
         <div class="formGrup">
         </div>
     </div>
+</body>
 <script>
     const mesajDiv = document.getElementById("mesajdivid");
     const mainContent = document.getElementById('mainDivid');
@@ -538,39 +635,50 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
     const gucVeri = document.getElementById('gucVeriid');
     const sensVeri = document.getElementById('sensVeriid');
     const gucBar = document.getElementById('gucBarid');
-    let ayarlar = {};
-    let infoo = {};
+    let ayarlar = {}; // Boş bir nesne tanımlandı
+    let infoo = {}; // Boş bir nesne tanımlandı
+
     /* --------- Tema Yönetimi --------- */
+    // Sistem temasını kontrol et
     if (!window.matchMedia || !window.matchMedia('(prefers-color-scheme: light)').matches) {
         document.documentElement.setAttribute('data-theme', 'dark');
     }
+
+    // Tema değiştirme fonksiyonu
     function toggleTheme() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', newTheme);
+        // Tercihi kaydet
         localStorage.setItem('theme', newTheme);
     }
+
+    // Sayfa yüklendiğinde kaydedilmiş tercihi kontrol et
     document.addEventListener('DOMContentLoaded', () => {
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             document.documentElement.setAttribute('data-theme', savedTheme);
         }
     });
+
     function getSignalClass(rssi) {
         if (rssi >= -50) return 'signal-full';
         if (rssi >= -65) return 'signal-good';
         if (rssi >= -75) return 'signal-fair';
         return 'signal-weak';
     }
+
     /* --------- Spinner İşlemleri --------- */
     function SpinnerGoster() {
         spinner.style.display = 'flex';
         mainContent.classList.add('blur');
     }
+
     function SpinnerGizle() {
         spinner.style.display = 'none';
         mainContent.classList.remove('blur');
     }
+
     /* --------- Sayfa Yükleme ve Form İşlemleri --------- */
     function loadData() {
         if (window.innerWidth < 340) {
@@ -579,11 +687,25 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
         else if (window.innerWidth < 400) {
             document.body.style.zoom = "0.8";
         }
+
         formuBaslat();
         ayrGonderInit();
+        // Test ortamı için statik veriler
         if (Object.keys(ayarlar).length === 0) {
             console.log('Test ortamında çalışıyor...');
+            // ayarlar.WifiMode = 2;
+            // ayarlar.PortalMode = 2;
+            // ayarlar.PortalPsk = "test ortamı";
+            // ayarlar.WifiChan = 1;
+            // ayarlar.WifiPower = 2;
+            // infoo.LastIP = "localhost";
+            // infoo.WifiStatus = true;  // WiFi bağlı durumu
+            // infoo.Rssi = -65;         // Sinyal gücü
+            // infoo.CurrentSSID = "Test_WiFi_1"; // Bağlı ağ adı
+            // infoo.PortalStatus = true; // Portal durumu
+
         }
+
         const selectAyarlar = document.querySelectorAll('.veri');
         selectAyarlar.forEach(element => {
             const ayarAdi = element.dataset.ayarAdi;
@@ -591,19 +713,31 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                 element.value = ayarlar[ayarAdi];
             }
         });
+
+        // Info alanlarını doldur
         document.querySelectorAll('.infoo').forEach(element => {
             const infoAdi = element.dataset.ayarAdi;
             element.value = infoo[infoAdi] || '';
         });
+
+        // WiFi durum göstergesini güncelle
         if (infoo.WifiStatus) {
             const signalClass = getSignalClass(infoo.Rssi);
             wifiSignal.className = `wifi-signal ${signalClass}`;
             currentSsid.textContent = infoo.CurrentSSID;
         }
         portalIcon.style.display = infoo.PortalStatus ? 'block' : 'none';
+
+        // 3. UI göster
         mainContent.style.display = 'block';
+
+        // 4. Periyodik güncelleme başlat
         setInterval(veriiste, 60000);
+
+
+
     }
+
     function veriiste() {
         let xmlhttp = new XMLHttpRequest();
         xmlhttp.timeout = 8000;
@@ -611,7 +745,10 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             if (this.readyState == 4) {
                 if (this.status == 200) {
                     let jsonData = JSON.parse(this.responseText);
+
+                    // Info verilerini güncelle
                     if (jsonData.info) {
+                        // Info elementlerini güncelle
                         const infoElements = document.querySelectorAll('.infoo');
                         infoElements.forEach(element => {
                             const infoAdi = element.dataset.ayarAdi;
@@ -619,6 +756,8 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                                 element.value = jsonData.info[infoAdi];
                             }
                         });
+
+                        // WiFi durumunu güncelle
                         if (jsonData.info.WifiStatus) {
                             const signalClass = getSignalClass(jsonData.info.Rssi);
                             wifiSignal.className = `wifi-signal ${signalClass}`;
@@ -629,6 +768,8 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                         }
                         portalIcon.style.display = jsonData.info.PortalStatus ? 'block' : 'none';
                     }
+
+                    // İşlemciden gelen bildirim mesajı varsa göster
                     if (jsonData.notification) {
                         showNotification(jsonData.notification.message, jsonData.notification.type);
                     }
@@ -641,11 +782,13 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
         xmlhttp.open("DAT", "/ayarlar.html");
         xmlhttp.send();
     }
+
     /* --------- ESP32 İletişim Fonksiyonları --------- */
     async function fetchWithTimeout(resource, options = {}) {
         const { timeout = 8000 } = options;
         const controller = new AbortController();
         const id = setTimeout(() => controller.abort(), timeout);
+
         try {
             const response = await fetch(resource, {
                 ...options,
@@ -661,18 +804,22 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             throw error;
         }
     }
+
     /* --------- Bildirim İşlemleri --------- */
     function showNotification(message, type = 'info', duration = 3000) {
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
         notification.textContent = message;
         document.body.appendChild(notification);
+
         setTimeout(() => notification.classList.add('show'), 10);
+
         setTimeout(() => {
             notification.classList.remove('show');
             setTimeout(() => notification.remove(), 300);
         }, duration);
     }
+
     /* --------- Durum Log İşlemleri --------- */
     function addStatusLog(message) {
         const statusFrame = document.querySelector('.statusframe');
@@ -681,10 +828,12 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
         logEntry.textContent = message;
         statusFrame.appendChild(logEntry);
         statusFrame.scrollTop = statusFrame.scrollHeight;
+
         while (statusFrame.children.length > 5) {
             statusFrame.removeChild(statusFrame.firstChild);
         }
     }
+
     /* --------- Sayfa Yükleme ve Form İşlemleri --------- */
     function sayfaEkle(baslikMetni, sayfaNumarasi) {
         const sayfaId = 'sayfa' + sayfaNumarasi;
@@ -702,10 +851,12 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
         const hedefChild = mainDiv.children[sayfaNumarasi];
         mainDiv.insertBefore(sayfaDiv, hedefChild);
     }
+
     function formGrupOlustur(etiketMetni, ayarAdi = '', selectEnabled, visible, sayfaNumarasi, bileşenTipi = 'sel', secenekler = []) {
         const formGrupDiv = document.createElement('div');
         formGrupDiv.className = 'formGrup';
         formGrupDiv.style.display = visible ? 'flex' : 'none';
+
         const formIsimDiv = document.createElement('div');
         formIsimDiv.className = 'formIsim';
         const etiket = document.createElement('label');
@@ -756,24 +907,30 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
         hedefDiv.classList.add('sayfa');
         hedefDiv.appendChild(formGrupDiv);
     }
+
     function formuBaslat() {
-        let sNo = 3;
+        let sNo = 3; // elemanların indekslerine göre sayfaEkle alanlarını sırayla yerleştirmek için
+
         sNo++;
         sayfaEkle('Cihaz Ayarları', sNo)
         formGrupOlustur('*Cihaz Adı', 'DevName', 1, 1, sNo, 'txt');
         sNo++;
         sayfaEkle('İnfo', sNo)
         formGrupOlustur('Son Alınan Ip', 'LastIP', 1, 1, sNo, 'info');
+
         formGrupOlustur('Version', 'Version', 1, 1, sNo, 'info');
         formGrupOlustur('Donanım', 'Hardware', 1, 1, sNo, 'info');
         formGrupOlustur('Yazılım', 'DevSoftware', 1, 1, sNo, 'info');
         formGrupOlustur('Yükleme Zamanı', 'BuildTime', 1, 1, sNo, 'info');
         formGrupOlustur('Mac', 'DevMac', 1, 1, sNo, 'info');
         formGrupOlustur('Zaman', 'DevTime', 1, 1, sNo, 'info');
+
         sNo++;
     }
+
     async function guncelleAyar(selectElement) {
         selectElement.style.backgroundColor = 'var(--status-pending)';
+
         try {
             const response = await fetchWithTimeout(
                 `/${selectElement.dataset.ayarAdi}=${selectElement.value}`,
@@ -782,13 +939,17 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                     timeout: 10000
                 }
             );
+
             const responseData = await response.json();
             selectElement.value = responseData.cevap;
+
+            // CSS değişkenlerini kullan
             if (responseData.durum === 'ok') {
                 selectElement.style.backgroundColor = 'var(--status-success)';
             } else {
                 selectElement.style.backgroundColor = 'var(--status-error)';
             }
+
         } catch (error) {
             selectElement.style.backgroundColor = 'red';
             mainContent.style.display = 'none';
@@ -796,30 +957,60 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             mesajDiv.style.fontSize = '20px';
             mesajDiv.style.color = '#ff3333';
             mesajDiv.innerHTML = "İşlemci yanıt vermedi, sayfa yeniden yükleniyor...";
+
             setTimeout(() => {
                 location.reload();
             }, 5000);
         }
     }
+
     function ayrGonderInit() {
         const selectElements = document.querySelectorAll('.veri');
         selectElements.forEach(selectElement => {
             selectElement.addEventListener('change', () => guncelleAyar(selectElement));
         });
     }
+
+
     async function komutbtn(komut, data = {}) {
-        let timeout = 8000;
+        // Komuta göre timeout süresini belirle
+        let timeout = 8000; // Varsayılan timeout
+
+        // Temel data yapısı
         let requestData = {
+
         };
+
+        // switch (komut) {
+        //     case 'reset': {  // Kayıtlı ağa bağlan butonu
+
+        //         break;
+        //     }
+
+        //     case 'restore': {  // WiFi bağlantısını koparma
+        //         break;
+        //     }
+
+        //     case 'update': {  // Kayıtlı ağı güncelle butonu
+
+        //         break;
+        //     }
+        // }
+
+        // İsteği gönder
         try {
             SpinnerGoster();
             const response = await fetchWithTimeout("/" + komut + ".btn", {
                 method: 'BTN',
                 headers: { 'Content-Type': 'application/json' },
                 body: "<<json|" + JSON.stringify(requestData) + "|json>>",
-                timeout: timeout
+                timeout: timeout // Belirlenen timeout süresini kullan
             });
             const responseData = await response.json();
+
+
+
+            // Liste tiplerine göre işlem yap
             if (responseData.info) {
                 const infoElements = document.querySelectorAll('.infoo');
                 infoElements.forEach(element => {
@@ -828,6 +1019,8 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                         element.value = responseData.info[infoAdi];
                     }
                 });
+
+                // WiFi durumunu güncelle
                 if (jsonData.info.WifiStatus) {
                     const signalClass = getSignalClass(jsonData.info.Rssi);
                     wifiSignal.className = `wifi-signal ${signalClass}`;
@@ -838,12 +1031,15 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
                 }
                 portalIcon.style.display = jsonData.info.PortalStatus ? 'block' : 'none';
             }
+            // Gelen mesaj varsa göster
             if (responseData.message) {
                 addStatusLog(responseData.message);
             }
             if (responseData.notification) {
                 showNotification(responseData.notification.message, responseData.notification.type);
             }
+
+
             SpinnerGizle();
         } catch (error) {
             SpinnerGizle();
@@ -854,4 +1050,8 @@ const char Ayarlar_Html[] PROGMEM = R"rawliteral(
             }, 2000);
         }
     }
-)rawliteral";
+
+
+</script>
+
+</html>

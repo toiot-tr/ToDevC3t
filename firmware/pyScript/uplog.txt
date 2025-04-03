@@ -1,0 +1,129 @@
+Processing todevc3tf (platform: espressif32@6.9.0; board: esp32-c3-devkitc-02; framework: arduino)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+rev.h dosyası güncellendi: src/rev.h
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32-c3-devkitc-02.html
+PLATFORM: Espressif 32 (6.9.0) > Espressif ESP32-C3-DevKitC-02
+HARDWARE: ESP32C3 160MHz, 320KB RAM, 4MB Flash
+DEBUG: Current (cmsis-dap) External (cmsis-dap, esp-bridge, esp-builtin, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+PACKAGES: 
+ - framework-arduinoespressif32 @ 3.20017.241212+sha.dcc1105b 
+ - tool-esptoolpy @ 1.40501.0 (4.5.1) 
+ - tool-mkfatfs @ 2.0.1 
+ - tool-mklittlefs @ 1.203.210628 (2.3) 
+ - tool-mkspiffs @ 2.230.0 (2.30) 
+ - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 34 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- ArduinoJson @ 7.3.0
+|-- FS @ 2.0.0
+|-- LittleFS @ 2.0.0
+|-- Preferences @ 2.0.0
+|-- SPI @ 2.0.0
+|-- Wire @ 2.0.0
+|-- WiFi @ 2.0.0
+|-- ArduinoOTA @ 2.0.0
+|-- DNSServer @ 2.0.0
+|-- ESPmDNS @ 2.0.0
+Building in release mode
+Compiling .pio/build/todevc3tf/src/main.cpp.o
+Linking .pio/build/todevc3tf/firmware.elf
+Retrieving maximum program size .pio/build/todevc3tf/firmware.elf
+Checking size .pio/build/todevc3tf/firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [=         ]  13.4% (used 43804 bytes from 327680 bytes)
+Flash: [========= ]  87.2% (used 1143088 bytes from 1310720 bytes)
+Building .pio/build/todevc3tf/firmware.bin
+esptool.py v4.5.1
+Creating esp32c3 image...
+Merged 2 ELF sections
+Successfully created esp32c3 image.
+Configuring upload protocol...
+AVAILABLE: cmsis-dap, esp-bridge, esp-builtin, esp-prog, espota, esptool, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa
+CURRENT: upload_protocol = esptool
+custom_upload_action(["upload"], [".pio/build/todevc3tf/firmware.bin"])
+    ::::::::Log dosyasında [SUCCESS] veya [FAIL] bulunamadı.:::::
+Looking for upload port...
+Auto-detected: /dev/cu.usbmodem101
+Uploading .pio/build/todevc3tf/firmware.bin
+esptool.py v4.5.1
+Serial port /dev/cu.usbmodem101
+Connecting...
+Chip is ESP32-C3 (revision v0.4)
+Features: WiFi, BLE
+Crystal is 40MHz
+MAC: 58:cf:79:2a:cb:28
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 921600
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00003fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+Flash will be erased from 0x0000e000 to 0x0000ffff...
+Flash will be erased from 0x00010000 to 0x00130fff...
+Compressed 12464 bytes to 9065...
+Writing at 0x00000000... (100 %)
+Wrote 12464 bytes (9065 compressed) at 0x00000000 in 0.3 seconds (effective 313.5 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 146...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (146 compressed) at 0x00008000 in 0.1 seconds (effective 282.3 kbit/s)...
+Hash of data verified.
+Compressed 8192 bytes to 47...
+Writing at 0x0000e000... (100 %)
+Wrote 8192 bytes (47 compressed) at 0x0000e000 in 0.2 seconds (effective 425.7 kbit/s)...
+Hash of data verified.
+Compressed 1180832 bytes to 627728...
+Writing at 0x00010000... (2 %)
+Writing at 0x0002ee8f... (5 %)
+Writing at 0x0003dd07... (7 %)
+Writing at 0x000485ca... (10 %)
+Writing at 0x000533e8... (12 %)
+Writing at 0x0005db36... (15 %)
+Writing at 0x000659e2... (17 %)
+Writing at 0x0006cb7c... (20 %)
+Writing at 0x00074423... (23 %)
+Writing at 0x0007b658... (25 %)
+Writing at 0x00081f8e... (28 %)
+Writing at 0x00089118... (30 %)
+Writing at 0x0008f17a... (33 %)
+Writing at 0x000951e6... (35 %)
+Writing at 0x0009af5b... (38 %)
+Writing at 0x000a0c34... (41 %)
+Writing at 0x000a6f82... (43 %)
+Writing at 0x000acd36... (46 %)
+Writing at 0x000b2a43... (48 %)
+Writing at 0x000b8b6c... (51 %)
+Writing at 0x000bee3c... (53 %)
+Writing at 0x000c4898... (56 %)
+Writing at 0x000ca5d8... (58 %)
+Writing at 0x000cfeed... (61 %)
+Writing at 0x000d61d7... (64 %)
+Writing at 0x000dc0c2... (66 %)
+Writing at 0x000e1eeb... (69 %)
+Writing at 0x000e8002... (71 %)
+Writing at 0x000ee5cf... (74 %)
+Writing at 0x000f4976... (76 %)
+Writing at 0x000fab79... (79 %)
+Writing at 0x00100bf2... (82 %)
+Writing at 0x00106a69... (84 %)
+Writing at 0x0010d01e... (87 %)
+Writing at 0x00114a49... (89 %)
+Writing at 0x0011b784... (92 %)
+Writing at 0x00121ee8... (94 %)
+Writing at 0x00127c3f... (97 %)
+Writing at 0x0012e310... (100 %)
+Wrote 1180832 bytes (627728 compressed) at 0x00010000 in 8.0 seconds (effective 1186.0 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+process_log_file(["upload"], [".pio/build/todevc3tf/firmware.bin"])
+    ::::MAC Address bulundu
+    ::::MAC adresini kaydediyorum: 58:CF:79:2A:CB:28 - 2025-04-03 16:00:16 - ToioT Firmware - v0.1.0
+========================= [SUCCESS] Took 18.61 seconds =========================

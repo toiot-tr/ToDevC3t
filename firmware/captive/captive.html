@@ -1,8 +1,6 @@
-#include "header.h"
-
-const char Captive_Html[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,6 +18,7 @@ const char Captive_Html[] PROGMEM = R"rawliteral(
         %3Cpath fill='%2366CCFF' d='M82 10h6v20h-6z'/%3E
     %3C/svg%3E">
     <style>
+        /* Renk değişkenleri */
         :root {
             --bg-primary: #f6f8fa;
             --bg-secondary: #e9ecef;
@@ -32,6 +31,8 @@ const char Captive_Html[] PROGMEM = R"rawliteral(
             --status-error: #ffcccb;
             --status-pending: #c8c803;
         }
+
+        /* Koyu mod renkleri */
         [data-theme="dark"] {
             --bg-primary: #191f27;
             --bg-secondary: #1b2634;
@@ -44,6 +45,7 @@ const char Captive_Html[] PROGMEM = R"rawliteral(
             --status-error: #5c1e1e;
             --status-pending: #919101;
         }
+
         body {
             color: var(--text-primary);
             background-color: var(--bg-primary);
@@ -54,6 +56,8 @@ const char Captive_Html[] PROGMEM = R"rawliteral(
             max-width: 400px;
             margin: auto;
         }
+
+        /* Spinner stili */
         .spinnerCss {
             position: fixed;
             top: 0;
@@ -66,6 +70,7 @@ const char Captive_Html[] PROGMEM = R"rawliteral(
             z-index: 1;
             background-color: rgba(0, 0, 0, 0.2);
         }
+
         .loading-spinner {
             position: absolute;
             top: 50%;
@@ -78,32 +83,42 @@ const char Captive_Html[] PROGMEM = R"rawliteral(
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
+
         @keyframes spin {
             0% {
                 transform: translate(-50%, -50%) rotate(0deg);
             }
+
             100% {
                 transform: translate(-50%, -50%) rotate(360deg);
             }
         }
     </style>
 </head>
+
 <body>
     <div id="spinnerid" class="spinnerCss">
         <div class="loading-spinner"></div>
     </div>
     <script>
         const spinner = document.getElementById('spinnerid');
+
         /* --------- Tema Yönetimi --------- */
+        // Sistem temasını kontrol et
         if (!window.matchMedia || !window.matchMedia('(prefers-color-scheme: light)').matches) {
             document.documentElement.setAttribute('data-theme', 'dark');
         }
+
+        // Tema değiştirme fonksiyonu
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', newTheme);
+            // Tercihi kaydet
             localStorage.setItem('theme', newTheme);
         }
+
+        // Sayfa yüklendiğinde kaydedilmiş tercihi kontrol et
         document.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
@@ -111,16 +126,24 @@ const char Captive_Html[] PROGMEM = R"rawliteral(
             }
             SpinnerGoster();
         });
+
         function getSignalClass(rssi) {
             if (rssi >= -50) return 'signal-full';
             if (rssi >= -65) return 'signal-good';
             if (rssi >= -75) return 'signal-fair';
             return 'signal-weak';
         }
+
         function SpinnerGoster() {
             spinner.style.display = 'flex';
         }
+
         setTimeout(function () {
             window.location.href = "toiot.html";
         }, 200);
-)rawliteral";
+
+
+    </script>
+</body>
+
+</html>
